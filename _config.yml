@@ -1,9 +1,9 @@
 # Site settings
 title: "CIS 198"
-email: "cis198@cis.upenn.edu"
+email: "dhole@mail.com"
 baseurl: "/rust"
-url: "http://cis198-2016s.github.io"
-github_username: cis198-2016s
+url: "https://dhole.github.io"
+github_username: dhole
 
 # Build settings
 markdown: kramdown
