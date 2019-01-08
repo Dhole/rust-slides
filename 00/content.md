@@ -1,6 +1,6 @@
 # Disclaimer #
 
-This course material is taken from an existing course:
+This course material is taken and modified from an existing course:
 
 [CIS 198: Rust Programming,
 University of Pennsylvania,
