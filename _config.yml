@@ -1,7 +1,7 @@
 # Site settings
 title: "CIS 198"
 email: "dhole@mail.com"
-baseurl: "/rust"
+baseurl: "/rust-slides"
 url: "https://dhole.github.io"
 github_username: dhole
 
