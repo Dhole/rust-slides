@@ -1,3 +1,11 @@
+# Disclaimer #
+
+This course material is taken from an existing course:
+
+CIS 198: Rust Programming,
+University of Pennsylvania,
+Spring 2016(https://cis198-2016s.github.io/)
+
 # CIS 198: Intro to COBOL #
 
 ![](img/cobol.png)
@@ -129,41 +137,23 @@ Read more at https://hacks.mozilla.org/2018/12/rust-2018-is-here/
 ---
 ## Administrivia
 
-- 8-9 homeworks (50%), final project (40%) (may change)
-- Participation (10%)
-- Weekly Rust lecture: Wed. 4:30-6:00pm, Towne 321
-- Mini-Course lecture: Tue. 6:00-7:30pm, Berger Auditorium
-- [Piazza](https://piazza.com/class/iiksjduyiy773s)
-    - We will be using Piazza for announcements; make sure you have gotten emails!
-- Consult [the website](http://cis198-2016s.github.io/) for the schedule,
+- Weekly Rust lecture: Thu. 18:00-19:30, iden3 office
+- Matrix: iden3/rust
+    - We will use a matrix group for offline discussion.
+- Consult [the website](http://dhole.github.io/rust-slides/) for the schedule,
   slides, and homework.
-- Class source material generally hosted on [GitHub](https://github.com/cis198-2016s/).
+- Class source material generally hosted on [GitHub](https://github.com/dhole/rust-slides/).
     - Corrections welcome via pull request/issue!
 - Course is in development - give us feedback!
-
----
-### Administrivia: Office Hours
-
-- David - Mon 4:30-6:00pm
-- Terry - Tues 6:00-7:30pm
-- Kai   - Weds 6:00-7:00pm
-
-Office hours held in the Levine 6th floor lounge.
-
-Any changes will be announced.
-Check the website or Google calendar for the up-to-date schedule.
 
 ---
 ### Administrivia: Homeworks (50%)
 
 - 8-9 homeworks.
-- Released on Wednesdays and (usually) due the following Wednesday night at midnight.
-- We will be using Classroom for GitHub.
-    - Click the link to make a private repo for every homework, which will be your submission.
-- Students start the semester with a total of 5 late days, which provide an
-  extra 24 hours each. You may use up to 2 late days on an assignment.
-  - If (and only if) you submit an assignment more than 2 days late or are out
-    of late days, there is a 20% penalty per day beyond the late day extension. 
+- They won't be delivered, you must do them to learn.
+- Can be done in pairs or groups.
+- Due to the following week.
+- Will be discussed during the first 20-30 minutes of the following week.
 
 ---
 ### Helpful Links ##
@@ -787,18 +777,16 @@ fn it_works() {
 ---
 ## HW00: Hello Cargo & Hello Rust
 
-- Due Monday, 2016-01-25, 11:59pm.
-- Install `multirust`: manages installations of multiple versions of Rust.
+- Due Thursday, 2019-01-18, 18:00.
+- Install `rustup`: manages installations of multiple versions of Rust.
     - Similar to `rvm`, `virtualenv`.
     - Linux, OS X, Windows (MSYS2)
-- Install 1.5 now if you want (updating is easy: `multirust update stable`).
-    - 1.6 comes out tomorrow! (1/21)
-- Submitting with Classroom for GitHub is as easy as ~~pie~~ pushing to your private repo.
+- Install 1.31 now if you want (updating is easy: `rustup update`).
 
 ---
 ## HW01: Finger Exercises
 
-- Due Wednesday, 2016-01-27, 11:59pm.
+- Due Thursday, 2019-01-25, 18:00.
 - Introduction to Rust with "finger exercises". Use this lecture as a resource!
     - Sieve of Eratosthenes, Tower of Hanoi
 
