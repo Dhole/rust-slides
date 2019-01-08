@@ -6,6 +6,7 @@ CIS 198: Rust Programming,
 University of Pennsylvania,
 Spring 2016(https://cis198-2016s.github.io/)
 
+---
 # CIS 198: Intro to COBOL #
 
 ![](img/cobol.png)
