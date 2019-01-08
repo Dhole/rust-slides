@@ -84,16 +84,18 @@ Rust is:
 
 - Rust has a new stable release every six weeks
 - Nightly builds are available, well, nightly
-- Current stable: Rust 1.5
-- Rust 1.6 will be out tomorrow (1/21)!
-    - This is the version we'll be using in this class
+- Current stable: Rust 1.31.1
 - Train model:
 
 Date | Stable | Beta | Nightly
 --- | --- | --- | ---
-2015-12-10 | 🚂 1.5 | 🚆 1.6 | 🚝 1.7
-2016-01-21 | 🚆 1.6 | 🚝 1.7 | 🚈 1.8
-2016-03-03 | 🚝 1.7 | 🚈 1.8 | 🚅 1.9
+2018-09-13 | 🚂 1.29 | 🚆 1.30 | 🚝 1.31
+2018-10-25 | 🚆 1.30 | 🚝 1.31 | 🚈 1.32
+2018-12-06 | 🚝 1.31 | 🚈 1.32 | 🚅 1.33
+
+### Rust 2018 and 2015 editions
+
+![](img/01_01-rust2018.png)
 
 ---
 ### Development
