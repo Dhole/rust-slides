@@ -98,6 +98,8 @@ Date | Stable | Beta | Nightly
 
 ![](img/01_01-rust2018.png)
 
+Read more at https://hacks.mozilla.org/2018/12/rust-2018-is-here/
+
 ---
 ### Development
 
