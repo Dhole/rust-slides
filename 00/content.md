@@ -2,9 +2,9 @@
 
 This course material is taken from an existing course:
 
-CIS 198: Rust Programming,
+[CIS 198: Rust Programming,
 University of Pennsylvania,
-Spring 2016(https://cis198-2016s.github.io/)
+Spring 2016](https://cis198-2016s.github.io/)
 
 ---
 # CIS 198: Intro to COBOL #
