@@ -800,3 +800,5 @@ fn it_works() {
 
 Some code examples taken from
 [_The Rust Programming Language_](https://doc.rust-lang.org/stable/book/).
+
+Course content forked from [CIS 198: Rust Programming, University of Pennsylvania, 2016](https://cis198-2016s.github.io/)
