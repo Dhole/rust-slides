@@ -37,8 +37,7 @@ let origin = Point { x: 0, y: 0 };
 
 - Struct fields may be accessed with dot notation.
 - Structs may not be partially-initialized.
-    - You must assign all fields upon creation, or declare an uninitialized
-      struct that you initialize later.
+    - You must assign all fields upon creation.
 
 ```rust
 let mut p = Point { x: 19, y: 8 };

@@ -102,7 +102,7 @@ Here's another example:
 
 ???
 
-- Moving ownership is an impliict operation done at compile time. No data is
+- Moving ownership is an implicit operation done at compile time. No data is
   moved or copied around when your program is being run.
 - The movement of data is automatic, you don't need to call anything like
   std::move (as in C++).
@@ -399,6 +399,32 @@ note: reference must be valid for the block suffix following statement
 
 As a side note, this technique of creating a block to limit the scope of a
 variable (in this case x) is pretty useful.
+
+---
+### Borrowing prevents this bug in C++
+
+```C++
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<int> vec;
+    vec.push_back(0);
+    int *x = &vec[0];
+    cout << "*x = " << *x << endl;
+    
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    //vec.push_back(4);
+    
+    vec[0] = 42;
+    cout << "*x = " << *x << endl;
+    return 0;
+}
+```
+http://tpcg.io/Oy2Kl7 
 
 ---
 ## Example: Vectors
