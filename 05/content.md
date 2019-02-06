@@ -325,11 +325,12 @@ fn foo() -> io::Result {
 ```
 
 ---
-## Result - `try!`
+## Result - `? operator (formerly try!)`
 
-- `try!` is a macro, which means it generates Rust's code at compile-time.
+- `?` is a syntax sugar over the former `try!` macro, which means it generates
+  Rust's code at compile-time.
     - This means it can actually expand to pattern matching syntax patterns.
-- The code that `try!` generates looks roughly like this:
+- The code that `?` generates looks roughly like this:
 
 ```rust
 macro_rules! try {
@@ -341,12 +342,12 @@ macro_rules! try {
 ```
 
 ---
-## `try!`
+## `? operator`
 
-- `try!` is a concise way to implement early returns when encountering errors.
+- `?` is a concise way to implement early returns when encountering errors.
 
 ```rust
-let socket1: TcpStream = try!(TcpStream::connect("127.0.0.1:8000"));
+let socket1: TcpStream = TcpStream::connect("127.0.0.1:8000")?;
 
 // Is equivalent to...
 let maybe_socket: Result<TcpStream> =
@@ -359,7 +360,7 @@ let socket2: TcpStream =
 ```
 
 - This is actually a _slight_ simplification.
-    - Actual `try!` has some associated trait ~~magic~~logic.
+    - Actual `?` has some associated trait ~~magic~~logic.
 
 ---
 ## [Collections](https://doc.rust-lang.org/stable/std/collections/)
