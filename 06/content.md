@@ -2,7 +2,7 @@
 
 ### CIS 198 Lecture 6
 
-###### Reference: [TRPL 5.8](https://doc.rust-lang.org/book/choosing-your-guarantees.html)
+###### Reference: [TRPL ch15](https://doc.rust-lang.org/book/ch15-00-smart-pointers.html)
 
 ---
 ## `&T` and `&mut T`

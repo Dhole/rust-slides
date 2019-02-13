@@ -73,7 +73,7 @@ mod japanese {
 }
 ```
 
-Reference: [TRPL 4.25](http://doc.rust-lang.org/book/crates-and-modules.html)
+Reference: [TRPL ch07](https://doc.rust-lang.org/book/ch07-00-packages-crates-and-modules.html)
 
 ---
 ## Modules
@@ -281,9 +281,9 @@ build = "build.rs"
 ## Cargo: The Rabbit Hole
 
 - Cargo has a lot of features. If you're interested, check them out
-  in the [Cargo manifest format][] documentation.
+  in the [Cargo manifest format][reference/manifest] documentation.
 
-[Cargo manifest format]: http://doc.crates.io/manifest.html
+[reference/manifest]: https://doc.rust-lang.org/cargo/reference/manifest.html
 
 
 ---
@@ -318,7 +318,7 @@ fn midterm2() {
     - `#[cfg(target_os = "linux")]` define conditional compilation.
     - And [many more][reference/attributes]!
 
-[reference/attributes]: https://doc.rust-lang.org/stable/reference.html#attributes
+[reference/attributes]: https://doc.rust-lang.org/stable/reference/attributes.html
 
 ---
 # Rust Code Style
@@ -332,8 +332,12 @@ fn midterm2() {
     - If you contribute to an open-source Rust project, it will probably be
       expected that you follow these rules.
 - The [rustfmt][] project is an automatic code formatter.
+- The rust compiler has some warnings about code style.
+- There is also [clippy](https://github.com/rust-lang/rust-clippy), a tool to
+  identify non-idiomatic patterns from your code (a linter) and suggest the
+  idiomatic equivalent.
 
-[style guide]: https://github.com/rust-lang/rust/tree/master/src/doc/style
+[style guide]: https://github.com/rust-dev-tools/fmt-rfcs
 [rustfmt]: https://github.com/rust-lang-nursery/rustfmt
 
 ---
