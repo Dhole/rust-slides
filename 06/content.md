@@ -97,7 +97,6 @@ let mut shared = Rc::new(6);
 let mut cloned = shared.clone(); // ==> Another reference to same data
 {
     println!("{:?}", Rc::get_mut(&mut shared)); // ==> None
-    println!("{:?}", Rc::get_mut(&mut cloned)); // ==> None
 }
 ```
 
