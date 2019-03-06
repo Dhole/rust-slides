@@ -46,16 +46,16 @@
 
 ```rust
 // Try to bind a UDP socket
-let mut socket = try!(UdpSocket::bind("127.0.0.1:34254"));
+let mut socket = UdpSocket::bind("127.0.0.1:34254")?;
 
 // Try to receive data from the socket we've bound
 let mut buf = [0; 10];
-let (amt, src) = try!(socket.recv_from(&mut buf));
+let (amt, src) = socket.recv_from(&mut buf)?;
 
 // Send a reply to the socket we just received data from
 let buf = &mut buf[..amt];
 buf.reverse();
-try!(socket.send_to(buf, &src));
+socket.send_to(buf, &src)?;
 
 // Close the socket
 drop(socket);
@@ -247,9 +247,9 @@ use hyper::client::Client;
 // GET
 fn get_contents(url: &str) -> hyper::Result<String> {
     let client = Client::new();
-    let mut response = try!(client.get(url).send());
+    let mut response = client.get(url).send()?;
     let mut buf = String::new();
-    try!(response.read_to_string(&mut buf));
+    response.read_to_string(&mut buf)?;
     Ok(buf)
 }
 
@@ -275,9 +275,9 @@ fn post_query(url: &str, query: Vec<(&str, &str)>)
     let body = form_urlencoded::serialize(query);
 
     let client = Client::new();
-    let mut response = try!(client.post(url).body(&body[..]).send());
+    let mut response = client.post(url).body(&body[..]).send()?;
     let mut buf = String::new();
-    try!(response.read_to_string(&mut buf));
+    response.read_to_string(&mut buf)?;
     Ok(buf)
 }
 
@@ -293,12 +293,13 @@ println!("{}", post_query("http://httpbin.org/post", query)
     any data that's encodable to JSON!
 
 ```rust
-extern crate rustc_serialize;
-use rustc_serialize::{Encodable, json};
+extern crate serde_json;
 
-fn post_json<T: Encodable>(url: &str, payload: &T)
+use serde_json;
+
+fn post_json<T: Serialize>(url: &str, payload: &T)
         -> hyper::Result<String> {
-    let body = json::encode(payload).unwrap();
+    let body = serde_json::to_string(payload).unwrap();
 
     // same as before from here
 }

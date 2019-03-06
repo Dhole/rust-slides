@@ -36,11 +36,11 @@ use std::io;
 use std::io::prelude::*;
 use std::fs::File;
 
-let mut f = try!(File::open("foo.txt"));
+let mut f = File::open("foo.txt")?;
 let mut buffer = [0; 10];
 
 // read up to 10 bytes
-try!(f.read(&mut buffer));
+f.read(&mut buffer)?;
 ```
 
 - `buffer` is an array, so the max length to read is encoded into the type.
@@ -74,9 +74,6 @@ fn read_exact(&mut self, buf: &mut [u8]) -> Result<()>
 
 ```rust
 fn bytes(self) -> Bytes<Self> where Self: Sized
-
-// Unstable!
-fn chars(self) -> Bytes<Self> where Self: Sized
 ```
 
 - `bytes` transforms some `Read` into an iterator which yields byte-by-byte.
@@ -84,13 +81,6 @@ fn chars(self) -> Bytes<Self> where Self: Sized
     - So the type returned from calling `next()` on the iterator is
       `Option<Result<u8>>`.
     - Hitting an `EOF` corresponds to `None`.
-
-- `chars` does the same, and will try to interpret the reader's contents as a
-  UTF-8 character sequence.
-    - Unstable; Rust team is not currently sure what the semantics of this
-      should be. See issue [#27802][].
-
-[#27802]: https://github.com/rust-lang/rust/issues/27802
 
 ---
 ## Iterator Adaptors
@@ -133,9 +123,9 @@ pub trait Write {
 ## Writing
 
 ```rust
-let mut buffer = try!(File::create("foo.txt"));
+let mut buffer = File::create("foo.txt")?;
 
-try!(buffer.write("Hello, Ferris!"));
+buffer.write("Hello, Ferris!")?;
 ```
 
 ---
@@ -164,7 +154,7 @@ fn by_ref(&mut self) -> &mut Self where Self: Sized { ... }
 - Returns a `Result`.
 
 ```rust
-let mut buf = try!(File::create("foo.txt"));
+let mut buf = File::create("foo.txt")?;
 
 write!(buf, "Hello {}!", "Ferris").unwrap();
 ```
@@ -203,7 +193,7 @@ TODO: demonstrate how slow IO is.
 fn new(inner: R) -> BufReader<R>;
 ```
 ```rust
-let mut f = try!(File::open("foo.txt"));
+let mut f = File::open("foo.txt")?;
 let buffered_reader = BufReader::new(f);
 ```
 
@@ -253,9 +243,9 @@ fn lines(self)
 - `BufWriter` does the same thing, wrapping around writers.
 
 ```rust
-let f = try!(File::create("foo.txt"));
+let f = File::create("foo.txt")?;
 let mut writer = BufWriter::new(f);
-try!(buffer.write(b"Hello world"));
+buffer.write(b"Hello world")?;
 ```
 
 - `BufWriter` doesn't implement a second interface like `BufReader` does.
@@ -268,7 +258,7 @@ try!(buffer.write(b"Hello world"));
 ```rust
 let mut buffer = String::new();
 
-try!(io::stdin().read_line(&mut buffer));
+io::stdin().read_line(&mut buffer)?;
 ```
 
 - This is a very typical way of reading from standard input (terminal input).
@@ -336,21 +326,14 @@ fn main() {
 ```
 
 * Also has support for hex- and base64- encoded text output.
+* Deprecated!
 
 ---
-## [Serde](https://github.com/serde-rs/serde)
+## [Serde](https://serde.rs/)
 
 - **Ser**ialization/**De**serialization.
 - Next generation of Rust serialization: faster, more flexible.
-    - But API is currently in flux! We're talking about serde 0.7.0,
-      released yesterday. (Not on crates.io as of this writing.)
-- Serde is easy in Rust nightly!
-    - A compiler plugin creates attributes and auto-derived traits.
-- Slightly harder to use in Rust stable:
-    - Compiler plugins aren't available.
-    - Instead, Rust code is generated before building (via `build.rs`).
-        - `serde_codegen` generates `.rs` files from `.rs.in` files.
-    - And you use the `include!` macro to include the resulting files.
+- A compiler plugin creates attributes and auto-derived traits.
 - Separate crates for each output format:
   - Support for binary, JSON, MessagePack, XML, YAML.
 
@@ -360,11 +343,12 @@ fn main() {
 - Code looks similar to `rustc_serialize`:
 
 ```rust
-#![feature(custom_derive, plugin)]
-#![plugin(serde_macros)]
 
 extern crate serde;
 extern crate serde_json;
+
+use serde::{Serialize, Deserialize};
+use serde_json;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct X { a: i32, b: String }
@@ -415,11 +399,11 @@ fn visit<S>(&mut self, sr: &mut S)
   match self.state {
     0 => { // On first call, serialize x.
       self.state += 1;
-      Ok(Some(try!(sr.serialize_struct_elt("x", &self.value.x))))
+      Ok(Some(sr.serialize_struct_elt("x", &self.value.x)?)))
     }
     1 => { // On second call, serialize y.
       self.state += 1;
-      Ok(Some(try!(sr.serialize_struct_elt("y", &self.value.y))))
+      Ok(Some(sr.serialize_struct_elt("y", &self.value.y)?)))
     }
     _ => Ok(None) // Subsequently, there is no more to serialize.
   }
