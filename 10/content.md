@@ -3,15 +3,6 @@
 ### CIS 198 Lecture 10
 
 ---
-## Misc.
-
-Rust 1.7 releasing on Thursday, 3/03!
-
-- If using multirust: `multirust update stable`
-- If not: just run the installer again, it will provide the option to update a
-toolchain rather than re-installing it.
-
----
 ## What is Concurrency?
 
 - One program with multiple threads of execution running at the same time.
@@ -171,7 +162,7 @@ fn bar() {
 
 - Rust's standard library contains a threading library, `std::thread`.
     - Other threading models have been added and removed over time.
-    - The Rust "runtime" was been removed.
+    - The Rust "runtime" was removed.
 - Each thread in Rust has its own stack and local state.
 - In Rust, you define the behavior of a thread with a closure:
 
