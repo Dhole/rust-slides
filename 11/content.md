@@ -264,7 +264,6 @@ x = 1;    |      y *= 2;
 - Statically guarantees data race safety!
     - This may seem to contradict what we said last week, but Rayon achieves
         this property via allowing particular, limited data access per thread.
-- Still pretty experimental, so user beware.
 
 ---
 ### Parallel Iterators
@@ -440,9 +439,9 @@ ts.store(value+1);              |  ts.store(value+1);
 
 - Rust does not have a standard scoped thread library anymore.
 - Instead, there are three notable ones:
-    - [scoped_threadpool](https://github.com/Kimundi/scoped-threadpool-rs)
-    - [scoped_pool](https://github.com/reem/rust-scoped-pool)
-    - [crossbeam](https://github.com/aturon/crossbeam)
+    - [scoped_threadpool](https://github.com/Kimundi/scoped-threadpool-rs) (Seems outdated)
+    - [scoped_pool](https://github.com/reem/rust-scoped-pool) (Seems outdated)
+    - [crossbeam](https://github.com/aturon/crossbeam) (Currently active)
 - These are all relatively* similar, so we'll look at some high-level features
     from each.
 
@@ -478,9 +477,6 @@ ts.store(value+1);              |  ts.store(value+1);
 
 - Crossbeam scoped threads can also defer their destruction until after
     they would have been destructed.
-- Crossbeam scoped threads are also
-    [totally black magic](http://aturon.github.io/crossbeam-doc/src/crossbeam/scoped.rs.html#67),
-    you guys.
 - Crossbeam also has a few other concurrency features, but they're somewhat out
     of scope here.
 
@@ -488,6 +484,7 @@ ts.store(value+1);              |  ts.store(value+1);
 ## Thread Pools
 
 - Two of these libraries provide _thread pools_.
+- Also `rayon::ThreadPool`.
 - Thread pools are a collection of threads that can be scheduled to a set of tasks.
 - Threads are created up-front and stored in memory in the pool, and can be
     dispatched as needed.
@@ -529,7 +526,7 @@ ts.store(value+1);              |  ts.store(value+1);
     [here](https://doc.rust-lang.org/nomicon/leaking.html).
 
 ---
-## [Eventual](https://github.com/carllerche/eventual)
+## [Futures](https://github.com/rust-lang-nursery/futures-rs)
 
 - A library for performing asynchronous computations.
 - Employs `Future`s and `Stream`s, which represent asynchronous computations.
@@ -541,7 +538,7 @@ ts.store(value+1);              |  ts.store(value+1);
 > &mdash;Wikipedia
 
 ---
-### Futures & Streams
+### Futures & Co.
 
 - A `Future` is a proxy for a value which is being computed asynchronously.
 - The computation behind a `Future` may be run in another thread, or may be
@@ -552,21 +549,8 @@ ts.store(value+1);              |  ts.store(value+1);
      other Futures, etc.
 - `Stream`s are similar to `Future`s, but represent a sequence of values instead
   of just one.
-
----
-### Futures & Streams
-
-```rust
-extern crate eventual;
-use eventual::*;
-
-let f1 = Future::spawn(|| { 1 });
-let f2 = Future::spawn(|| { 2 });
-let res = join((f1, f2))
-            .and_then(|(v1, v2)| Ok(v1 + v2))
-            .await().unwrap();
-println!("{}", res); // 3
-```
+- `Sink`s provide support for asynchronous writing of data.
+- `Executor`s are responsible for running asynchronous tasks.
 
 ---
 ### Futures
@@ -575,3 +559,52 @@ println!("{}", res); // 3
 - Easier than running a raw thread with the desired computation.
 - Example: Requesting large images from an HTTP server might be slow, so it
     might be better to fetch images in parallel asynchronously.
+
+---
+### [Tokio](https://github.com/tokio-rs/tokio)
+
+> The asynchronous run-time for the Rust programming language.
+
+```rust
+use tokio::io;
+use tokio::net::TcpStream;
+use tokio::prelude::*;
+
+pub fn main() -> Result<(), Box<std::error::Error>> {
+    let addr = "127.0.0.1:6142".parse()?;
+    let client = TcpStream::connect(&addr)
+        .and_then(|stream| {
+            println!("created stream");
+            io::write_all(stream, "hello world\n").then(|result| {
+                println!("wrote to stream; success={:?}", result.is_ok());
+                Ok(())
+            })
+        })
+        .map_err(|err| {
+            println!("connection error = {:?}", err);
+        });
+    println!("About to create the stream and write to it...");
+    tokio::run(client);
+    println!("Stream has been created and written to.");
+
+    Ok(())
+}
+```
+> From Tokio docs
+
+---
+### Looking into the Future
+
+```
+async(); await();
+async(); await();
+async(); await();
+async(); await();
+In the System()
+// the mighty System()
+The process.sleep()s tonight ~
+```
+> by @stefanbc on Twitter
+
+Async and await syntax is comming to Rust in the near future.  It's not yet
+stable.
